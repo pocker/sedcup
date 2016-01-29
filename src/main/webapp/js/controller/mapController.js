@@ -92,10 +92,9 @@
 				});
 			}
 
-			i++;
-			if (i < pois.length) {
+			if (i < pois.length - 1) {
 				setTimeout(function() {
-					addMarker(i)
+					addMarker(i+1)
 				}, 100);
 			}
 		}
