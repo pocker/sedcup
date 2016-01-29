@@ -56,10 +56,9 @@
 		});
 		marker.addListener('click', toggleBounce);
 
-		
 		addMarker(0);
-		function addMarker(i){
-			
+		function addMarker(i) {
+
 			var marker = new google.maps.Marker(
 					{
 						map : map,
@@ -71,11 +70,21 @@
 							lng : parseFloat(pois[i][3])
 						}
 					});
-	
+
 			markers.push(marker);
+
+			marker.addListener('click', function() {
+				var infoWindow = new google.maps.InfoWindow;
+				infoWindow.setContent('<h3>' + pois[i][1] + '</h3>');
+				infoWindow.setPosition(marker.position);
+				infoWindow.open(map);
+			});
+
 			i++;
-			if(i<pois.length){
-				setTimeout(function(){addMarker(i)}, 100);
+			if (i < pois.length) {
+				setTimeout(function() {
+					addMarker(i)
+				}, 100);
 			}
 		}
 
