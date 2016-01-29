@@ -1,4 +1,4 @@
 /**
  * 
  */ 
-angular.module('sedcup', ['ngMap']);
+var app = angular.module('sedcup', []);

@@ -4,8 +4,10 @@
 <meta name="viewport" content="initial-scale=1.0">
 <meta charset="utf-8">
 <script type="text/javascript" src="node_modules/angular/angular.js"></script>
-<script type="text/javascript" src="node_modules/angular-google-maps/dist/angular-google-maps_dev_mapped.js"></script>
+
 <script type="text/javascript" src="js/app/app.js"></script>
+<script type="text/javascript" src="js/controller/mapController.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfV0tM9jLqbujIjraexLiwewWm2Tvb31I"></script>
 <style>
 html, body {
 	height: 100%;
@@ -18,24 +20,9 @@ html, body {
 }
 </style>
 </head>
-<body>
+<body ng-app="sedcup">
+	<div id="map"  ng-controller="mapController"></div>
 
-	<div id="map"></div>
-	<script>
-		var map;
-		function initMap() {
-			map = new google.maps.Map(document.getElementById('map'), {
-				center : {
-					lat : -34.397,
-					lng : 150.644
-				},
-				zoom : 8
-			});
-		}
-	</script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfV0tM9jLqbujIjraexLiwewWm2Tvb31I&callback=initMap"
-		async defer></script>
 
 	<div style="display: none;">
 		<h2>Jersey RESTful Web Application!</h2>
