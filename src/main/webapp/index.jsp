@@ -1,4 +1,8 @@
 <html>
+<head>
+
+<script type="text/javascript"  src="node_modules/angular/angular.js"></script>
+</head>
 <body>
     <h2>Jersey RESTful Web Application!</h2>
     <p><a href="webapi/myresource">Jersey resource</a>
