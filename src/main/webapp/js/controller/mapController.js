@@ -1,7 +1,7 @@
 /**
  * 
  */
-
+var map;
 (function() {
 	'use strict';
 	angular.module('sedcup').controller('mapController', mapController);
@@ -12,10 +12,10 @@
 			[ '3', 'Pivo vár', '46.247843', '20.142431', 'icon/bar_coktail.png', [23, 24, 27]],
 			[ '4', 'Soccer club', '46.252578', '20.143465', 'icon/bar_coktail.png', [12, 28, 35, 21]],
 			[ '5', 'Hungi vigadó', '46.254485', '20.152984', 'icon/bar_coktail.png', [32, 31, 15]],
-			[ '6', 'Vak egér', '46.245715', '20.159241', 'icon/bar_coktail.png', [34]],
+			[ '6', 'Vak egér', '46.245715', '20.159241', 'icon/bar_coktail.png', [34,36]],
 			[ '7', 'Betyárok tanyája', '46.258182', '20.168439', 'icon/bar_coktail.png', [33] ],
 			[ '8', 'Blues cafe', '46.250265', '20.147396', 'icon/bar_coktail.png', [8, 11, 27, 24]],
-			[ '9', 'Acapella', '46.252011', '20.147569', 'icon/icecream.png', [28, 35, 29]],
+			[ '9', 'Acapella', '46.252011', '20.147569', 'icon/icecream.png', [28, 35, 29,36]],
 			[ '10', 'Cairo cafe', '46.251567', '20.149837', 'icon/bar_coktail.png', [26, 11, 8, 10, 27]],
 			[ '11', 'McDonalds', '46.251365', '20.146798', 'icon/restaurant.png', [27, 35, 11]],
 			[ '12', 'Kárász utca pad', '46.251121', '20.147405', 'icon/lodging_0star.png', [27, 8, 10, 7]],
@@ -28,12 +28,12 @@
 			[ '19', 'Jate club', '46.249755,', '20.146125', 'icon/jazzclub.png', [24, 12, 10]],
 			[ '20', 'Tisza dokk', '46.254394,', '20.154493', 'icon/jazzclub.png', [31, 4]],
 			[ 'n', '', '46.255248', '20.143757', '', [31, 29, 30]],
-			[ 'n', '', '46.251924', '20.138521', [1]],
-			[ 'n', '', '46.249609', '20.137877', '', [2, 12]],
+			[ 'n', '', '46.251924', '20.138521', '',[1]],
+			[ 'n', '', '46.249609', '20.137877', '', [2,36, 12]],
 			[ 'n', '', '46.246285', '20.145430', '', [24, 12, 25]],
 			[ 'n', '', '46.249624', '20.147480', '', [18, 7, 11, 27]],
 			[ 'n', '', '46.247087', '20.150065', '', [24, 16, 26]],
-			[ 'n', '', '46.250648', '20.149507', '', [24, 11, 8, 9]],
+			[ 'n', '', '46.250648', '20.149507', '', [24, 11,36, 8, 9]],
 			[ 'n', '', '46.250974', '20.146460', '', [24, 11, 35, 12] ],
 			[ 'n', '', '46.252339', '20.145902', '', [35, 3, 10, 20, 27]],
 			[ 'n', '', '46.253883', '20.147104', '', [28, 8, 15]],
@@ -42,7 +42,8 @@
 			[ 'n', '', '46.256642', '20.150881', '', [13, 15, 30]],
 			[ 'n', '', '46.256613', '20.160365', '', [32, 4]],
 			[ 'n', '', '46.249283', '20.158262', '', [16, 5]],
-			[ 'n', '', '46.251776', '20.144915', '', [12, 10, 27, 11]]
+			[ 'n', '', '46.251776', '20.144915', '', [12, 10, 27, 11]],
+			[ 'n', 'Irinyi', '46.247102', '20.147018', 'icon/battlefield.png' ]
 		];
 
 	function mapController($scope) {
@@ -51,7 +52,7 @@
 
 		var markers = [];
 
-		var map = new google.maps.Map(document.getElementById('map'), {
+		map = new google.maps.Map(document.getElementById('map'), {
 			center : {
 				lat : 46.250,
 				lng : 20.146
@@ -61,13 +62,14 @@
 			navigationControl : false,
 			mapTypeControl : false,
 			scaleControl : false,
-			zoom : 15
+			zoom : 13
 		});
 
 		addMarker(0);
+		
+		
 		function addMarker(i) {
 			var options = {
-				map : map,
 				draggable : false,
 				animation : google.maps.Animation.DROP,
 				position : {
@@ -81,9 +83,9 @@
 				options.icon = 'icon/hiking.png';
 			}
 			var marker = new google.maps.Marker(options);
-
+			marker.neighbours = [];
 			markers.push(marker);
-
+			marker.addListener('click',function(){go(i);});
 			if (pois[i][1]) {
 				marker.addListener('click', function() {
 					var infoWindow = new google.maps.InfoWindow;
@@ -97,9 +99,38 @@
 				setTimeout(function() {
 					addMarker(i+1)
 				}, 100);
+			} else {
+				f();
 			}
+			
+		}
+		
+		function f(){
+			for (var i in markers) {
+				   for (var j in pois[i][5]) {
+				    markers[i].neighbours.push(markers[pois[i][5][j]]);
+				   }
+				 }
+			go(14);
 		}
 
+		function go(j){
+			for(var i in markers){
+				setMapOn(markers[i], null);
+			}
+			setMapOn(markers[j], map);
+			
+			for(var k in markers[j].neighbours){
+				setMapOn(markers[j].neighbours[k], map);
+			}
+			
+			if(j<20){
+				map.setZoom(map.getZoom()+1);
+			}
+			
+			map.setCenter(markers[j].position);
+		}
+		
 		function setMapOn(marker, map) {
 			marker.setMap(map);
 		}
