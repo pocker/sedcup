@@ -7,26 +7,26 @@
 	angular.module('sedcup').controller('mapController', mapController);
 
 	var pois = [
-			[ '1', 'Rongy kocsma', '46.263883', '20.131972' ],
-			[ '2', 'Havanna söröző', '46.252753', '20.132720' ],
-			[ '3', 'Pivo vár', '46.247843', '20.142431' ],
-			[ '4', 'Soccer club', '46.252578', '20.143465' ],
-			[ '5', 'Hungi vigadó', '46.254485', '20.152984' ],
-			[ '6', 'Vak egér', '46.245715', '20.159241' ],
-			[ '7', 'Betyárok tanyája', '46.258182', '20.168439' ],
-			[ '8', 'Blues cafe', '46.250265', '20.147396' ],
-			[ '9', 'Acapella', '46.252011', '20.147569' ],
-			[ '10', 'Cairo cafe', '46.251567', '20.149837' ],
-			[ '11', 'McDonalds', '46.251365', '20.146798' ],
-			[ '12', 'Kárász utca pad', '46.251121', '20.147405' ],
-			[ '13', 'Tesco Express Dugonics tér', '46.250791', '20.143704' ],
-			[ '14', 'Tesco Express Tisza Lajos sgt.', '46.256206', '20.148070' ],
-			[ '15', 'Tesco Tisza Center', '46.259499', '20.171159' ],
-			[ '16', 'Széchenyi tér pad', '46.254493', '20.149307' ],
-			[ '17', 'Tisza part', '46.250175', '20.151811' ],
-			[ '18', 'Sing', 'sing', '46.256692,', '20.138590' ],
-			[ '19', 'Jate', 'club', '46.249755,', '20.146125' ],
-			[ '20', 'Tisza', 'dokk', '46.254394,', '20.154493' ],
+			[ '1', 'Rongy kocsma', '46.263883', '20.131972', 'icon/bar_coktail.png' ],
+			[ '2', 'Havanna söröző', '46.252753', '20.132720', 'icon/bar_coktail.png'   ],
+			[ '3', 'Pivo vár', '46.247843', '20.142431', 'icon/bar_coktail.png' ],
+			[ '4', 'Soccer club', '46.252578', '20.143465', 'icon/bar_coktail.png'  ],
+			[ '5', 'Hungi vigadó', '46.254485', '20.152984', 'icon/bar_coktail.png'  ],
+			[ '6', 'Vak egér', '46.245715', '20.159241', 'icon/bar_coktail.png'  ],
+			[ '7', 'Betyárok tanyája', '46.258182', '20.168439', 'icon/bar_coktail.png'  ],
+			[ '8', 'Blues cafe', '46.250265', '20.147396', 'icon/bar_coktail.png' ],
+			[ '9', 'Acapella', '46.252011', '20.147569', 'icon/icecream.png'  ],
+			[ '10', 'Cairo cafe', '46.251567', '20.149837', 'icon/bar_coktail.png' ],
+			[ '11', 'McDonalds', '46.251365', '20.146798', 'icon/restaurant.png' ],
+			[ '12', 'Kárász utca pad', '46.251121', '20.147405', 'icon/lodging_0star.png' ],
+			[ '13', 'Tesco Express Dugonics tér', '46.250791', '20.143704', 'icon/conveniencestore.png' ],
+			[ '14', 'Tesco Express Tisza Lajos sgt.', '46.256206', '20.148070', 'icon/conveniencestore.png' ],
+			[ '15', 'Tesco Tisza Center', '46.259499', '20.171159', 'icon/conveniencestore.png' ],
+			[ '16', 'Széchenyi tér pad', '46.254493', '20.149307', 'icon/lodging_0star.png'  ],
+			[ '17', 'Tisza part', '46.250175', '20.151811', 'icon/lodging_0star.png'  ],
+			[ '18', 'Sing', 'sing', '46.256692,', '20.138590', 'icon/jazzclub.png' ],
+			[ '19', 'Jate', 'club', '46.249755,', '20.146125', 'icon/jazzclub.png' ],
+			[ '20', 'Tisza', 'dokk', '46.254394,', '20.154493', 'icon/jazzclub.png' ],
 			[ 'n', '', '46.255248', '20.143757' ],
 			[ 'n', '', '46.251924', '20.138521' ],
 			[ 'n', '', '46.249609', '20.137877' ],
@@ -60,8 +60,7 @@
 			navigationControl : false,
 			mapTypeControl : false,
 			scaleControl : false,
-			draggable : false,
-			zoom : 13
+			zoom : 15
 		});
 
 		addMarker(0);
@@ -75,8 +74,10 @@
 					lng : parseFloat(pois[i][3])
 				}
 			};
-			if (pois[i][1]) {
-				options.icon = 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
+			if (pois[i][4]) {
+				options.icon = pois[i][4];
+			} else {
+				options.icon = 'icon/hiking.png';
 			}
 			var marker = new google.maps.Marker(options);
 

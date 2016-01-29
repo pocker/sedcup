@@ -2,7 +2,7 @@
 <head>
 
 <meta name="viewport" content="initial-scale=1.0">
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="node_modules/angular/angular.js"></script>
 
 <script type="text/javascript" src="js/app/app.js"></script>
